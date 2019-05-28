@@ -1,0 +1,42 @@
+/*Appear google QR code using Dompdf*/
+
+
+
+use Dompdf\Dompdf;
+$dompdf = new Dompdf();
+use Dompdf\Options;
+$options = new Options();
+$options->setIsRemoteEnabled(true);
+$dompdf->setOptions($options);
+$name = '';
+ $mobile = '';
+ $email = '';
+  $id= '';
+$qr = "$id/$email/$mobile/$name";
+$qrCode = "<img src='https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=$qr' title='Code: ' />";
+$html ="<html><body style='width:600px;margin:0 auto; padding:10px; border:2px solid grey;'>";
+	 	$html .= '<div style=" width:600px; height:250px;">';
+	 	 	$html  .='<div style="width:50%; float:left;">';
+	 	 		$html .= "<p>$name</p>";
+	 	 		$html .= "<p>$mobile</p>";
+	 	 		$html .= "<p>$email</p>";
+		 	$html .= '</div>';
+	 	 	$html  .='<div style="width:50%; float:left;">';
+	 	 		$html .= '<p>'.$qrCode.'</p>';
+	 	 		$html .= '<p>Address</p>';
+		 	$html .= '</div>';		 	
+ 		$html .= '</div>';
+ 		$html .= '<div style=" width:600px;">';
+ 			$html .= '<h3>Terms And Conditions</h3>';
+ 			$html .= '<p>1. For the sake of scanner reading, Please print in laser.</p>';
+ 			$html .= '<p>2.This event is free for all. Registration is a prerequisite and this ticket must be presented every time when entering the venue during the event.</p>';
+ 			$html .='<p>3. Gates open at 1:30pm.</p>';
+ 		$html .= '</div>';
+ 		
+
+     $html .= '</body></html>';
+
+$dompdf->loadHtml($html);
+$dompdf->setPaper('A4', 'landscape');
+$dompdf->render();
+$dompdf->stream();
